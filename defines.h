@@ -368,10 +368,10 @@ struct	sockaddr_un {
 #endif /* HAVE_SYS_UN_H */
 
 #ifndef HAVE_IN_ADDR_T
-typedef u_int32_t	in_addr_t;
+//typedef u_int32_t	in_addr_t;
 #endif
 #ifndef HAVE_IN_PORT_T
-typedef u_int16_t	in_port_t;
+//typedef u_int16_t	in_port_t;
 #endif
 
 #if defined(BROKEN_SYS_TERMIO_H) && !defined(_STRUCT_WINSIZE)
@@ -637,7 +637,7 @@ struct winsize {
 
 #ifndef GETPGRP_VOID
 # include <unistd.h>
-# define getpgrp() getpgrp(0)
+//# define getpgrp() getpgrp(0)
 #endif
 
 #ifdef USE_BSM_AUDIT

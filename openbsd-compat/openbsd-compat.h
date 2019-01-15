@@ -224,7 +224,7 @@ int asprintf(char **, const char *, ...);
 
 #ifndef HAVE_OPENPTY
 # include <sys/ioctl.h>	/* for struct winsize */
-int openpty(int *, int *, char *, struct termios *, struct winsize *);
+//int openpty(int *, int *, char *, struct termios *, struct winsize *);
 #endif /* HAVE_OPENPTY */
 
 #ifndef HAVE_SNPRINTF
@@ -252,8 +252,10 @@ long long strtonum(const char *, long long, long long, const char **);
 # define mblen(x, y)	(1)
 #endif
 
+#define HAVE_WCWIDTH 1
 #ifndef HAVE_WCWIDTH
-# define wcwidth(x)	(((x) >= 0x20 && (x) <= 0x7e) ? 1 : -1)
+int wcwidth(int);
+#define wcwidth(x)	(((x) >= 0x20 && (x) <= 0x7e) ? 1 : -1)
 /* force our no-op nl_langinfo and mbtowc */
 # undef HAVE_NL_LANGINFO
 # undef HAVE_MBTOWC
@@ -261,7 +263,7 @@ long long strtonum(const char *, long long, long long, const char **);
 #endif
 
 #ifndef HAVE_NL_LANGINFO
-# define nl_langinfo(x)	""
+//#define nl_langinfo(x) printf()
 #endif
 
 #ifndef HAVE_MBTOWC

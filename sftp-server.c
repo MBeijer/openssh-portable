@@ -50,7 +50,8 @@
 
 #include "sftp.h"
 #include "sftp-common.h"
-
+#define ELOOP           62              /* Too many levels of symbolic links */
+#define EOPNOTSUPP      45              /* Operation not supported */
 /* Our verbosity */
 static LogLevel log_level = SYSLOG_LEVEL_ERROR;
 

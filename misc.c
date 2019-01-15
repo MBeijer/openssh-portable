@@ -32,13 +32,13 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/wait.h>
-#include <sys/un.h>
+//#include <sys/un.h>
 
 #include <limits.h>
 #ifdef HAVE_LIBGEN_H
 # include <libgen.h>
 #endif
-#include <poll.h>
+//#include <poll.h>
 #include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -72,7 +72,8 @@
 #include "sshbuf.h"
 #include "ssherr.h"
 #include "platform.h"
-
+#define ETIMEDOUT       60              /* Operation timed out */
+#define EINPROGRESS     36              /* Operation now in progress */
 /* remove newline at end of string */
 char *
 chop(char *s)
@@ -2107,8 +2108,8 @@ format_absolute_time(uint64_t t, char *buf, size_t len)
 {
 	time_t tt = t > INT_MAX ? INT_MAX : t; /* XXX revisit in 2038 :P */
 	struct tm tm;
-
-	localtime_r(&tt, &tm);
+	localtime(&tt);
+	//localtime_r(&tt, &tm);
 	strftime(buf, len, "%Y-%m-%dT%H:%M:%S", &tm);
 }
 

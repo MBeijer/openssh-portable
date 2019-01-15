@@ -35,13 +35,24 @@
 #ifndef HAVE_BINDRESVPORT_SA
 #include <sys/types.h>
 #include <sys/socket.h>
-
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
 #include <errno.h>
 #include <string.h>
-
+/* ipc/network software -- argument errors */
+#define ENOTSOCK        38              /* Socket operation on non-socket */
+#define EDESTADDRREQ    39              /* Destination address required */
+#define EMSGSIZE        40              /* Message too long */
+#define EPROTOTYPE      41              /* Protocol wrong type for socket */
+#define ENOPROTOOPT     42              /* Protocol not available */
+#define EPROTONOSUPPORT 43              /* Protocol not supported */
+#define ESOCKTNOSUPPORT 44              /* Socket type not supported */
+#define EOPNOTSUPP      45              /* Operation not supported */
+#define EPFNOSUPPORT    46              /* Protocol family not supported */
+#define EAFNOSUPPORT    47              /* Address family not supported by protocol family */
+#define EADDRINUSE      48              /* Address already in use */
+#define EADDRNOTAVAIL   49              /* Can't assign requested address */
 #define STARTPORT 600
 #define ENDPORT (IPPORT_RESERVED - 1)
 #define NPORTS	(ENDPORT - STARTPORT + 1)

@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <poll.h>
+//#include <poll.h>
 
 #ifdef WITH_OPENSSL
 #include <openssl/crypto.h>
@@ -59,7 +59,7 @@
 #include "ssherr.h"
 #include "sshbuf.h"
 #include "digest.h"
-
+#define ETIMEDOUT       60              /* Operation timed out */
 /* prototype */
 static int kex_choose_conf(struct ssh *);
 static int kex_input_newkeys(int, u_int32_t, struct ssh *);

@@ -603,6 +603,7 @@ hostfile_replace_entries(const char *filename, const char *host, const char *ip,
 			r = SSH_ERR_SYSTEM_ERROR;
 			goto fail;
 		}
+/*
 		if (link(filename, back) == -1) {
 			oerrno = errno;
 			error("%s: link %.100s to %.100s: %s", __func__,
@@ -610,6 +611,7 @@ hostfile_replace_entries(const char *filename, const char *host, const char *ip,
 			r = SSH_ERR_SYSTEM_ERROR;
 			goto fail;
 		}
+*/
 		if (rename(temp, filename) == -1) {
 			oerrno = errno;
 			error("%s: rename \"%s\" to \"%s\": %s", __func__,

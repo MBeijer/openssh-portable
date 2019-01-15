@@ -22,7 +22,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
-#include <sys/un.h>
+//#include <sys/un.h>
 
 #include <errno.h>
 #include <fcntl.h>
@@ -67,7 +67,8 @@
 #include "readconf.h"
 #include "clientloop.h"
 #include "ssherr.h"
-
+#define ECONNREFUSED    61              /* Connection refused */
+#define EADDRINUSE      48              /* Address already in use */
 /* from ssh.c */
 extern int tty_flag;
 extern Options options;
@@ -451,8 +452,8 @@ mux_master_process_new_session(struct ssh *ssh, u_int rid,
 	}
 
 	/* Try to pick up ttymodes from client before it goes raw */
-	if (cctx->want_tty && tcgetattr(new_fd[0], &cctx->tio) == -1)
-		error("%s: tcgetattr: %s", __func__, strerror(errno));
+//	if (cctx->want_tty && tcgetattr(new_fd[0], &cctx->tio) == -1)
+//		error("%s: tcgetattr: %s", __func__, strerror(errno));
 
 	/* enable nonblocking unless tty */
 	if (!isatty(new_fd[0]))
@@ -1331,6 +1332,7 @@ muxserver_listen(struct ssh *ssh)
 	}
 
 	/* Now atomically "move" the mux socket into position */
+	/*
 	if (link(options.control_path, orig_control_path) != 0) {
 		if (errno != EEXIST) {
 			fatal("%s: link mux listener %s => %s: %s", __func__,
@@ -1342,6 +1344,7 @@ muxserver_listen(struct ssh *ssh)
 		unlink(options.control_path);
 		goto disable_mux_master;
 	}
+*/
 	unlink(options.control_path);
 	free(options.control_path);
 	options.control_path = orig_control_path;

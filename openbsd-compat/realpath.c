@@ -43,7 +43,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
-
+#define ELOOP           62              /* Too many levels of symbolic links */
 #ifndef SYMLOOP_MAX
 # define SYMLOOP_MAX 32
 #endif

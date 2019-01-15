@@ -55,7 +55,7 @@
 static LogLevel log_level = SYSLOG_LEVEL_INFO;
 static int log_on_stderr = 1;
 static int log_stderr_fd = STDERR_FILENO;
-static int log_facility = LOG_AUTH;
+static int log_facility = 0;
 static char *argv0;
 static log_handler_fn *log_handler;
 static void *log_handler_ctx;
@@ -256,6 +256,7 @@ debug3(const char *fmt,...)
 void
 log_init(char *av0, LogLevel level, SyslogFacility facility, int on_stderr)
 {
+/*
 #if defined(HAVE_OPENLOG_R) && defined(SYSLOG_DATA_INIT)
 	struct syslog_data sdata = SYSLOG_DATA_INIT;
 #endif
@@ -325,7 +326,7 @@ log_init(char *av0, LogLevel level, SyslogFacility facility, int on_stderr)
 	 * If an external library (eg libwrap) attempts to use syslog
 	 * immediately after reexec, syslog may be pointing to the wrong
 	 * facility, so we force an open/close of syslog here.
-	 */
+	 *
 #if defined(HAVE_OPENLOG_R) && defined(SYSLOG_DATA_INIT)
 	openlog_r(argv0 ? argv0 : __progname, LOG_PID, log_facility, &sdata);
 	closelog_r(&sdata);
@@ -333,6 +334,7 @@ log_init(char *av0, LogLevel level, SyslogFacility facility, int on_stderr)
 	openlog(argv0 ? argv0 : __progname, LOG_PID, log_facility);
 	closelog();
 #endif
+*/
 }
 
 int
@@ -400,6 +402,7 @@ do_log2(LogLevel level, const char *fmt,...)
 void
 do_log(LogLevel level, const char *fmt, va_list args)
 {
+/*
 #if defined(HAVE_OPENLOG_R) && defined(SYSLOG_DATA_INIT)
 	struct syslog_data sdata = SYSLOG_DATA_INIT;
 #endif
@@ -456,7 +459,7 @@ do_log(LogLevel level, const char *fmt, va_list args)
 	strnvis(fmtbuf, msgbuf, sizeof(fmtbuf),
 	    log_on_stderr ? LOG_STDERR_VIS : LOG_SYSLOG_VIS);
 	if (log_handler != NULL) {
-		/* Avoid recursion */
+		/* Avoid recursion *
 		tmp_handler = log_handler;
 		log_handler = NULL;
 		tmp_handler(level, fmtbuf, log_handler_ctx);
@@ -477,4 +480,5 @@ do_log(LogLevel level, const char *fmt, va_list args)
 #endif
 	}
 	errno = saved_errno;
+*/
 }

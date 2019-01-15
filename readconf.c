@@ -18,7 +18,7 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/wait.h>
-#include <sys/un.h>
+//#include <sys/un.h>
 
 #include <netinet/in.h>
 #include <netinet/in_systm.h>

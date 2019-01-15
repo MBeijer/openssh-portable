@@ -113,7 +113,7 @@ atomiciov6(ssize_t (*f) (int, const struct iovec *, int), int fd,
 	}
 	/* Make a copy of the iov array because we may modify it below */
 	memcpy(iov, _iov, (size_t)iovcnt * sizeof(*_iov));
-
+#define BROKEN_READV_COMPARISON 1
 #ifndef BROKEN_READV_COMPARISON
 	pfd.fd = fd;
 	pfd.events = f == readv ? POLLIN : POLLOUT;

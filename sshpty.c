@@ -53,6 +53,14 @@
 # endif
 #endif
 
+#define TIOCSWINSZ  _IOW('t', 103, struct winsize)    /* set window size */
+struct winsize
+{
+  unsigned short ws_row;	/* rows, in characters */
+  unsigned short ws_col;	/* columns, in characters */
+  unsigned short ws_xpixel;	/* horizontal size, pixels */
+  unsigned short ws_ypixel;	/* vertical size, pixels */
+};
 /*
  * Allocates and opens a pty.  Returns 0 if no pty could be allocated, or
  * nonzero if a pty was successfully allocated.  On success, open file

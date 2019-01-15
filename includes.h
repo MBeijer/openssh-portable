@@ -17,7 +17,21 @@
 #define INCLUDES_H
 
 #include "config.h"
-
+typedef struct
+  {
+    int __val[2];
+  } fsid_t;
+struct statfs {
+   long    f_type;     /* type of filesystem (see below) */
+   long    f_bsize;    /* optimal transfer block size */
+   long    f_blocks;   /* total data blocks in file system */
+   long    f_bfree;    /* free blocks in fs */
+   long    f_bavail;   /* free blocks avail to non-superuser */
+   long    f_files;    /* total file nodes in file system */
+   long    f_ffree;    /* free file nodes in fs */
+   fsid_t  f_fsid;     /* file system id */
+   long    f_namelen;  /* maximum length of filenames */
+};
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE /* activate extra prototypes for glibc */
 #endif
@@ -87,9 +101,9 @@
 #ifdef HAVE_SYS_CDEFS_H
 # include <sys/cdefs.h> /* For __P() */
 #endif
-#ifdef HAVE_SYS_STAT_H
+//#ifdef HAVE_SYS_STAT_H
 # include <sys/stat.h> /* For S_* constants and macros */
-#endif
+//#endif
 #ifdef HAVE_SYS_SYSMACROS_H
 # include <sys/sysmacros.h> /* For MIN, MAX, etc */
 #endif

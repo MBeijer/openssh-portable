@@ -35,7 +35,7 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
-
+#define sigaction(...) ""
 #ifndef TCSASOFT
 /* If we don't have TCSASOFT define it so that ORing it it below is a no-op. */
 # define TCSASOFT 0
@@ -91,6 +91,7 @@ restart:
 	 * If we are using a tty but are not the foreground pgrp this will
 	 * generate SIGTTOU, so do it *before* installing the signal handlers.
 	 */
+/*
 	if (input != STDIN_FILENO && tcgetattr(input, &oterm) == 0) {
 		memcpy(&term, &oterm, sizeof(term));
 		if (!(flags & RPP_ECHO_ON))
@@ -152,9 +153,9 @@ restart:
 		const int sigttou = signo[SIGTTOU];
 
 		/* Ignore SIGTTOU generated when we are not the fg pgrp. */
-		while (tcsetattr(input, TCSAFLUSH|TCSASOFT, &oterm) == -1 &&
-		    errno == EINTR && !signo[SIGTTOU])
-			continue;
+//		while (tcsetattr(input, TCSAFLUSH|TCSASOFT, &oterm) == -1 &&
+//		    errno == EINTR && !signo[SIGTTOU])
+//			continue;
 		signo[SIGTTOU] = sigttou;
 	}
 	(void)sigaction(SIGALRM, &savealrm, NULL);

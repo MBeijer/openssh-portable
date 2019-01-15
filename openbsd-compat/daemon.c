@@ -48,6 +48,25 @@
 # include <unistd.h>
 #endif
 
+#include <errno.h>
+int __set_errno(int n)
+{
+    errno = n;
+    return -1;
+}
+int
+__setpgid (int pid, int pgid)
+{
+  __set_errno (ENOSYS);
+  return -1;
+}
+int
+setpgrp (void)
+{
+  return __setpgid (0, 0);
+}
+
+
 int
 daemon(int nochdir, int noclose)
 {

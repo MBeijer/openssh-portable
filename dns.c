@@ -57,6 +57,7 @@ static const char *
 dns_result_totext(unsigned int res)
 {
 	switch (res) {
+/*
 	case ERRSET_SUCCESS:
 		return errset_text[ERRSET_SUCCESS];
 	case ERRSET_NOMEMORY:
@@ -69,6 +70,7 @@ dns_result_totext(unsigned int res)
 		return errset_text[ERRSET_NONAME];
 	case ERRSET_NODATA:
 		return errset_text[ERRSET_NODATA];
+*/
 	default:
 		return "unknown error";
 	}
@@ -234,13 +236,12 @@ verify_host_key_dns(const char *hostname, struct sockaddr *address,
 		return -1;
 	}
 
-	result = getrrsetbyname(hostname, DNS_RDATACLASS_IN,
-	    DNS_RDATATYPE_SSHFP, 0, &fingerprints);
+	result = NULL; //getrrsetbyname(hostname, DNS_RDATACLASS_IN, DNS_RDATATYPE_SSHFP, 0, &fingerprints);
 	if (result) {
 		verbose("DNS lookup error: %s", dns_result_totext(result));
 		return -1;
 	}
-
+/*
 	if (fingerprints->rri_flags & RRSET_VALIDATED) {
 		*flags |= DNS_VERIFY_SECURE;
 		debug("found %d secure fingerprints in DNS",
@@ -249,23 +250,23 @@ verify_host_key_dns(const char *hostname, struct sockaddr *address,
 		debug("found %d insecure fingerprints in DNS",
 		    fingerprints->rri_nrdatas);
 	}
-
+*/
 	/* Initialize default host key parameters */
 	if (!dns_read_key(&hostkey_algorithm, &hostkey_digest_type,
 	    &hostkey_digest, &hostkey_digest_len, hostkey)) {
 		error("Error calculating host key fingerprint.");
-		freerrset(fingerprints);
+		//freerrset(fingerprints);
 		return -1;
 	}
-
+/*
 	if (fingerprints->rri_nrdatas)
 		*flags |= DNS_VERIFY_FOUND;
-
+*
 	for (counter = 0; counter < fingerprints->rri_nrdatas; counter++) {
 		/*
 		 * Extract the key from the answer. Ignore any badly
 		 * formatted fingerprints.
-		 */
+		 *
 		if (!dns_read_rdata(&dnskey_algorithm, &dnskey_digest_type,
 		    &dnskey_digest, &dnskey_digest_len,
 		    fingerprints->rri_rdatas[counter].rdi_data,
@@ -278,7 +279,7 @@ verify_host_key_dns(const char *hostname, struct sockaddr *address,
 			hostkey_digest_type = dnskey_digest_type;
 			free(hostkey_digest);
 
-			/* Initialize host key parameters */
+			/* Initialize host key parameters *
 			if (!dns_read_key(&hostkey_algorithm,
 			    &hostkey_digest_type, &hostkey_digest,
 			    &hostkey_digest_len, hostkey)) {
@@ -288,7 +289,7 @@ verify_host_key_dns(const char *hostname, struct sockaddr *address,
 			}
 		}
 
-		/* Check if the current key is the same as the given key */
+		/* Check if the current key is the same as the given key *
 		if (hostkey_algorithm == dnskey_algorithm &&
 		    hostkey_digest_type == dnskey_digest_type) {
 			if (hostkey_digest_len == dnskey_digest_len &&
@@ -298,9 +299,9 @@ verify_host_key_dns(const char *hostname, struct sockaddr *address,
 		}
 		free(dnskey_digest);
 	}
-
+*/
 	free(hostkey_digest); /* from sshkey_fingerprint_raw() */
-	freerrset(fingerprints);
+	//freerrset(fingerprints);
 
 	if (*flags & DNS_VERIFY_FOUND)
 		if (*flags & DNS_VERIFY_MATCH)

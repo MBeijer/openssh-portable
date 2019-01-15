@@ -122,7 +122,7 @@
 #include "auth-options.h"
 #include "version.h"
 #include "ssherr.h"
-
+#define ECONNABORTED    53              /* Software caused connection abort */
 /* Re-exec fds */
 #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
 #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)

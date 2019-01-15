@@ -1685,13 +1685,13 @@ record_failed_login(const char *username, const char *hostname,
 
 	memset(&ut, 0, sizeof(ut));
 	/* strncpy because we don't necessarily want nul termination */
-	strncpy(ut.ut_user, username, sizeof(ut.ut_user));
+//	strncpy(ut.ut_user, username, sizeof(ut.ut_user));
 	strlcpy(ut.ut_line, "ssh:notty", sizeof(ut.ut_line));
 
 	time(&t);
 	ut.ut_time = t;     /* ut_time is not always a time_t */
-	ut.ut_type = LOGIN_PROCESS;
-	ut.ut_pid = getpid();
+//	ut.ut_type = LOGIN_PROCESS;
+//	ut.ut_pid = getpid();
 
 	/* strncpy because we don't necessarily want nul termination */
 	strncpy(ut.ut_host, hostname, sizeof(ut.ut_host));
@@ -1702,16 +1702,9 @@ record_failed_login(const char *username, const char *hostname,
 		ipv64_normalise_mapped(&from, &fromlen);
 		if (from.ss_family == AF_INET) {
 			a4 = (struct sockaddr_in *)&from;
-			memcpy(&ut.ut_addr, &(a4->sin_addr),
-			    MIN_SIZEOF(ut.ut_addr, a4->sin_addr));
+//			memcpy(&ut.ut_addr, &(a4->sin_addr),
+//			    MIN_SIZEOF(ut.ut_addr, a4->sin_addr));
 		}
-#ifdef HAVE_ADDR_V6_IN_UTMP
-		if (from.ss_family == AF_INET6) {
-			a6 = (struct sockaddr_in6 *)&from;
-			memcpy(&ut.ut_addr_v6, &(a6->sin6_addr),
-			    MIN_SIZEOF(ut.ut_addr_v6, a6->sin6_addr));
-		}
-#endif
 	}
 
 	if (atomicio(vwrite, fd, &ut, sizeof(ut)) != sizeof(ut))

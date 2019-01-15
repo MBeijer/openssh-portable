@@ -58,7 +58,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
-#include <poll.h>
+//#include <poll.h>
 #include <signal.h>
 #include <time.h>
 
@@ -99,7 +99,19 @@
 #else
 #define DBG(x)
 #endif
-
+/* ipc/network software -- operational errors */
+#define ENETDOWN        50              /* Network is down */
+#define ENETUNREACH     51              /* Network is unreachable */
+#define ENETRESET       52              /* Network dropped connection on reset */
+#define ECONNABORTED    53              /* Software caused connection abort */
+#define ECONNRESET      54              /* Connection reset by peer */
+#define ENOBUFS         55              /* No buffer space available */
+#define EISCONN         56              /* Socket is already connected */
+#define ENOTCONN        57              /* Socket is not connected */
+#define ESHUTDOWN       58              /* Can't send after socket shutdown */
+#define ETOOMANYREFS    59              /* Too many references: can't splice */
+#define ETIMEDOUT       60              /* Operation timed out */
+#define ECONNREFUSED    61              /* Connection refused */
 #define PACKET_MAX_SIZE (256 * 1024)
 
 struct packet_state {

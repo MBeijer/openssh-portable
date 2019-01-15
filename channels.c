@@ -44,7 +44,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
-#include <sys/un.h>
+//#include <sys/un.h>
 #include <sys/socket.h>
 #ifdef HAVE_SYS_TIME_H
 # include <sys/time.h>
@@ -83,7 +83,24 @@
 #include "authfd.h"
 #include "pathnames.h"
 #include "match.h"
-
+/* ipc/network software -- operational errors */
+#define ENETDOWN        50              /* Network is down */
+#define ENETUNREACH     51              /* Network is unreachable */
+#define ENETRESET       52              /* Network dropped connection on reset */
+#define ECONNABORTED    53              /* Software caused connection abort */
+#define ECONNRESET      54              /* Connection reset by peer */
+#define ENOBUFS         55              /* No buffer space available */
+#define EISCONN         56              /* Socket is already connected */
+#define ENOTCONN        57              /* Socket is not connected */
+#define ESHUTDOWN       58              /* Can't send after socket shutdown */
+#define ETOOMANYREFS    59              /* Too many references: can't splice */
+#define ETIMEDOUT       60              /* Operation timed out */
+#define ECONNREFUSED    61              /* Connection refused */
+/* non-blocking and interrupt i/o */
+#define EAGAIN          35              /* Resource temporarily unavailable */
+#define EWOULDBLOCK     EAGAIN          /* Operation would block */
+#define EINPROGRESS     36              /* Operation now in progress */
+#define EALREADY        37              /* Operation already in progress */
 /* -- agent forwarding */
 #define	NUM_SOCKS	10
 
@@ -2039,6 +2056,7 @@ channel_handle_wfd(struct ssh *ssh, Channel *c,
 		}
 		return -1;
 	}
+#define BROKEN_TCGETATTR_ICANON 1
 #ifndef BROKEN_TCGETATTR_ICANON
 	if (c->isatty && dlen >= 1 && buf[0] != '\r') {
 		if (tcgetattr(c->wfd, &tio) == 0 &&
@@ -4452,6 +4470,7 @@ channel_connect_to_path(struct ssh *ssh, const char *path,
 void
 channel_send_window_changes(struct ssh *ssh)
 {
+/*
 	struct ssh_channels *sc = ssh->chanctxt;
 	struct winsize ws;
 	int r;
@@ -4472,6 +4491,7 @@ channel_send_window_changes(struct ssh *ssh)
 			fatal("%s: channel %u: send window-change: %s",
 			    __func__, i, ssh_err(r));
 	}
+*/
 }
 
 /* Return RDYNAMIC_OPEN channel: channel allows SOCKS, but is not connected */
@@ -4529,7 +4549,7 @@ rdynamic_connect_finish(struct ssh *ssh, Channel *c)
  * Returns 0 and a suitable display number for the DISPLAY variable
  * stored in display_numberp , or -1 if an error occurs.
  */
-int
+/*int
 x11_create_display_inet(struct ssh *ssh, int x11_display_offset,
     int x11_use_localhost, int single_connection,
     u_int *display_numberp, int **chanids)
@@ -4604,7 +4624,7 @@ x11_create_display_inet(struct ssh *ssh, int x11_display_offset,
 		error("Failed to allocate internet-domain X11 display socket.");
 		return -1;
 	}
-	/* Start listening for connections on the socket. */
+	/* Start listening for connections on the socket. *
 	for (n = 0; n < num_socks; n++) {
 		sock = socks[n];
 		if (listen(sock, SSH_LISTEN_BACKLOG) < 0) {
@@ -4614,7 +4634,7 @@ x11_create_display_inet(struct ssh *ssh, int x11_display_offset,
 		}
 	}
 
-	/* Allocate a channel for each socket. */
+	/* Allocate a channel for each socket. *
 	*chanids = xcalloc(num_socks + 1, sizeof(**chanids));
 	for (n = 0; n < num_socks; n++) {
 		sock = socks[n];
@@ -4627,11 +4647,11 @@ x11_create_display_inet(struct ssh *ssh, int x11_display_offset,
 	}
 	(*chanids)[n] = -1;
 
-	/* Return the display number for the DISPLAY environment variable. */
+	/* Return the display number for the DISPLAY environment variable. *
 	*display_numberp = display_number;
 	return 0;
 }
-
+*/
 static int
 connect_local_xsocket_path(const char *pathname)
 {

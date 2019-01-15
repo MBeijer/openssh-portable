@@ -69,7 +69,7 @@
 #include "ssherr.h"
 #include "authfd.h"
 #include "kex.h"
-
+#define EAFNOSUPPORT    47              /* Address family not supported by protocol family */
 struct sshkey *previous_host_key = NULL;
 
 static int matching_host_key_dns = 0;
@@ -1388,7 +1388,7 @@ ssh_local_cmd(const char *args)
 	if (pid == 0) {
 		signal(SIGPIPE, SIG_DFL);
 		debug3("Executing %s -c \"%s\"", shell, args);
-		execl(shell, shell, "-c", args, (char *)NULL);
+		//execl(shell, shell, "-c", args, (char *)NULL);
 		error("Couldn't execute %s -c \"%s\": %s",
 		    shell, args, strerror(errno));
 		_exit(1);

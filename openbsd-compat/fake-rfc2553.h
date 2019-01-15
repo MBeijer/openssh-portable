@@ -134,6 +134,7 @@ struct sockaddr_in6 {
 # define EAI_FAMILY	(INT_MAX - 5)
 #endif
 
+#define HAVE_STRUCT_ADDRINFO 1
 #ifndef HAVE_STRUCT_ADDRINFO
 struct addrinfo {
 	int	ai_flags;	/* AI_PASSIVE, AI_CANONNAME */

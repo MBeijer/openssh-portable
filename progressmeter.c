@@ -292,6 +292,7 @@ sig_winch(int sig)
 static void
 setscreensize(void)
 {
+/*
 	struct winsize winsize;
 
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &winsize) != -1 &&

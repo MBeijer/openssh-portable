@@ -2206,11 +2206,11 @@ client_session2_setup(struct ssh *ssh, int id, int want_tty, int want_subsystem,
 
 	packet_set_interactive(want_tty,
 	    options.ip_qos_interactive, options.ip_qos_bulk);
-
+/*
 	if (want_tty) {
 		struct winsize ws;
 
-		/* Store window size in the packet. */
+		/* Store window size in the packet. *
 		if (ioctl(in_fd, TIOCGWINSZ, &ws) < 0)
 			memset(&ws, 0, sizeof(ws));
 
@@ -2225,10 +2225,10 @@ client_session2_setup(struct ssh *ssh, int id, int want_tty, int want_subsystem,
 			tiop = get_saved_tio();
 		ssh_tty_make_modes(ssh, -1, tiop);
 		packet_send();
-		/* XXX wait for reply */
+		/* XXX wait for reply *
 		c->client_tty = 1;
 	}
-
+*/
 	/* Transfer any environment variables from client to server */
 	if (options.num_send_env != 0 && env != NULL) {
 		debug("Sending environment.");

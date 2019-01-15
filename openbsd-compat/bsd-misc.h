@@ -22,7 +22,11 @@
 char *ssh_get_progname(char *);
 
 #ifndef HAVE_SETSID
+#ifndef __AMIGA__
 #define setsid() setpgrp(0, getpid())
+#else
+#define setsid() setpgrp()
+#endif
 #endif /* !HAVE_SETSID */
 
 #ifndef HAVE_SETENV

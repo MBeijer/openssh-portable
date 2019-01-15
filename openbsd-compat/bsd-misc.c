@@ -143,7 +143,7 @@ int nanosleep(const struct timespec *req, struct timespec *rem)
 	extern int errno;
 	struct timeval tstart, tstop, tremain, time2wait;
 
-	TIMESPEC_TO_TIMEVAL(&time2wait, req)
+	TIMESPEC_TO_TIMEVAL(&time2wait, req);
 	(void) gettimeofday(&tstart, NULL);
 	rc = select(0, NULL, NULL, NULL, &time2wait);
 	if (rc == -1) {
@@ -161,7 +161,7 @@ int nanosleep(const struct timespec *req, struct timespec *rem)
 		tremain.tv_usec = 0;
 	}
 	if (rem != NULL)
-		TIMEVAL_TO_TIMESPEC(&tremain, rem)
+		TIMEVAL_TO_TIMESPEC(&tremain, rem);
 
 	return(rc);
 }
@@ -178,6 +178,7 @@ int usleep(unsigned int useconds)
 }
 #endif
 
+#define HAVE_TCGETPGRP 1
 #ifndef HAVE_TCGETPGRP
 pid_t
 tcgetpgrp(int fd)
@@ -259,6 +260,7 @@ pledge(const char *promises, const char *paths[])
 }
 #endif
 
+#define HAVE_MBTOWC 1
 #ifndef HAVE_MBTOWC
 /* a mbtowc that only supports ASCII */
 int

@@ -49,7 +49,6 @@
 #define _GETRRSETBYNAME_H
 
 #include "includes.h"
-#define HAVE_GETRRSETBYNAME 1
 #ifndef HAVE_GETRRSETBYNAME
 
 #include <sys/types.h>
